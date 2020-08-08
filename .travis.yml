@@ -18,4 +18,3 @@ import:
   - credentials.yml
   - .travis-merger.yml
   - .travis-stages.yml
-  - react-helloworld-tryout/.travis.yml
