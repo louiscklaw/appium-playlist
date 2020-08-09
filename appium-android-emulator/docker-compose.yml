@@ -36,6 +36,7 @@ services:
       - selenium_hub
       - real_device
     ports:
+      - 4723:4723
       - 6080:6080
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
