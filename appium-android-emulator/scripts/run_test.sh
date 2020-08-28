@@ -4,4 +4,8 @@ set -ex
 
 reset
 
-node helloworld.js
+cd test_scripts
+  yarn
+  node helloworld.js
+
+cd ..
