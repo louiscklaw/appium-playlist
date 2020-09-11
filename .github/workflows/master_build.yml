@@ -2,20 +2,14 @@ name: master_build
 on: [push]
 
 jobs:
-
-  #
-  # /home/logic/_workspace/github-playlist/action-secrets-tryout/build.yml
-  #
-  # https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
-  action_secrets_tryout:
+  appium-helloworld-tryout:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - name: action-secrets-tryout
+        run: |
+          cd appium-helloworld-tryout
+            node ./index.js
+          cd ..
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
-        run: |
-          cd action-secrets-tryout
-            ./decrypt_secret.sh
-          cd ..
