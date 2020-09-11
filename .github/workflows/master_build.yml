@@ -20,12 +20,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - run: |
-          cd appium-android-emulator
+          cd appium-android-emulator-tryout
             docker-compose up -d
           cd ..
 
       - run: |
-          cd appium-android-emulator/test_scripts
+          cd appium-android-emulator-tryout/test_scripts
             yarn
             node helloworld.js
           cd ../..
@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - run: |
-          cd appium-android-emulator
+          cd appium-android-emulator-tryout
             docker-compose up -d
           cd ..
 
@@ -57,7 +57,7 @@ jobs:
           export LANG=C.UTF-8
 
       - run: |
-          cd appium-android-emulator/test_scripts
+          cd appium-android-emulator-tryout/test_scripts
             pipenv sync
             pipenv run python3 ./test.py
           cd ../..
