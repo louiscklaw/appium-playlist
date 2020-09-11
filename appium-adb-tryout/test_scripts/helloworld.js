@@ -1,5 +1,6 @@
 const fs = require('fs')
 const wdio = require("webdriverio");
+// const ADB = require('appium-adb')
 
 const opts = {
   path: '/wd/hub',
