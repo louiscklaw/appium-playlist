@@ -58,7 +58,6 @@ jobs:
 
           pipenv --version
 
-      - run: |
           cd appium-android-emulator-tryout/test_scripts
             pipenv sync
             pipenv run python3 ./test.py
