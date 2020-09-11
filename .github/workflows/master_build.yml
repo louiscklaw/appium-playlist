@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-        run: |
+      - run: |
           cd appium-helloworld-tryout
             node ./index.js
           cd ..
