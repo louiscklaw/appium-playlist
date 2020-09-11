@@ -23,6 +23,7 @@ jobs:
           cd appium-android-emulator-tryout
             docker-compose up -d
           cd ..
+          sleep 30
 
       - run: |
           cd appium-android-emulator-tryout/test_scripts
@@ -43,6 +44,7 @@ jobs:
           cd appium-android-emulator-tryout
             docker-compose up -d
           cd ..
+          sleep 30
 
       - run: |
           sudo apt update
