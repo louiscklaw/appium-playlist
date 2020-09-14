@@ -16,6 +16,7 @@ cache:
 
 import:
   - credentials.yml
+  # merge handled by github actions
   # - .travis-merger.yml
   - .travis-stages.yml
 
