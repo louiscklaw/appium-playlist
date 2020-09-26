@@ -1,6 +1,6 @@
-name: master_build
+name: pull_request
 on:
-  push:
+  pull_request:
 
 jobs:
   #
