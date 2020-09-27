@@ -1,0 +1,24 @@
+# https://docs.travis-ci.com/user/docker/
+# https://docs.travis-ci.com/user/environment-variables/
+# https://docs.travis-ci.com/user/job-lifecycle/
+
+# You can import up to 25 other configs in total.
+os: linux
+
+language: node_js
+
+node_js:
+  - 12
+
+cache:
+  - npm
+  - pip
+
+import:
+  - credentials.yml
+  # merge handled by github actions
+  # - .travis-merger.yml
+  - .travis-stages.yml
+
+scripts:
+  - hostname
