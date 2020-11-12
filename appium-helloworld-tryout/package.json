@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "appium": "^1.18.3",
+    "global": "^4.4.0"
+  }
 }

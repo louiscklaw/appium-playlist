@@ -41,7 +41,7 @@ services:
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
       - ./video-nexus_7.1.1:/tmp/video
-      - /home/logic/_workspace/appium-playlist/appium-android-emulator/apk_pool:/root/apk_pool
+      - /home/logic/_workspace/appium-playlist/appium-android-emulator-tryout/apk_pool:/root/apk_pool
     environment:
       - DEVICE=Nexus 5
       - CONNECT_TO_GRID=true

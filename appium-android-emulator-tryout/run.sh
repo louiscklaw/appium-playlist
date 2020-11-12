@@ -3,5 +3,5 @@
 set -ex
 
 
-  scripts/start_docker.sh
-  scripts/run_test.sh
+scripts/start_docker.sh
+scripts/run_test.sh
