@@ -90,12 +90,6 @@ jobs:
   
             popd
   
-            echo 'testing javascipt appium client'
-            pushd tests/javascript
-              yarn
-              node ./helloworld.js
-            popd
-  
           popd
   
         env: # Or as an environment variable
