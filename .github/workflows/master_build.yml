@@ -87,7 +87,7 @@ jobs:
           github-build-merger/test.sh
 
   merge:
-    needs: [appium-android-7-tryout, appium-android-emulator-tryout, test_merger]
+    needs: [appium-android-emulator-tryout, test_merger]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
