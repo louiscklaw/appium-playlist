@@ -27,8 +27,8 @@ services:
       #- BROWSER_NAME=chrome
 
   # Docker-Android for Android application testing
-  nexus_7.1.1:
-    image: budtmo/docker-android-x86-7.1.1
+  nexus_8.0:
+    image: budtmo/docker-android-x86-8.0
     privileged: true
     # Increase scale number if needed
     scale: 1
@@ -40,7 +40,7 @@ services:
       - 6080:6080
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
-      - ./video-nexus_7.1.1:/tmp/video
+      - ./video-nexus_8.0:/tmp/video
       - ./apk_pool:/root/apk_pool
     environment:
       - DEVICE=Nexus 5
