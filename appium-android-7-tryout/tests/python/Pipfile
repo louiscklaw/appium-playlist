@@ -9,6 +9,3 @@ verify_ssl = true
 pytest = "*"
 sauceclient = "*"
 Appium-Python-Client = ">=0.28"
-
-[requires]
-python_version = "3.8"
