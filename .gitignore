@@ -1,5 +1,6 @@
 .env
-*.mp4
+**/*.mp4
+**/*.png
 
 **/node_modules
 **/build
