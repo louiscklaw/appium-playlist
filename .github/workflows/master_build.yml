@@ -67,10 +67,10 @@ jobs:
           export LANG=C.UTF-8
   
           pushd appium-android-emulator-tryout
-            scripts/start_docker.sh
+            docker-compose up -d
   
             echo 'sleep to let docker emulator steady'
-            sleep 240
+            sleep 90
   
             echo 'testing python appium client'
             pushd tests/python
