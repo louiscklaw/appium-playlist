@@ -80,6 +80,7 @@ jobs:
   
             echo 'list docker-compose status'
             docker-compose ps -a
+            docker-compose logs
   
             echo 'testing python appium client'
             pushd tests/python
