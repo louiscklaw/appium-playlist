@@ -14,12 +14,6 @@ appium-android-emulator-tryout:
         export LC_ALL=C.UTF-8
         export LANG=C.UTF-8
 
-      env: # Or as an environment variable
-        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-
-    - run: |
         pushd appium-android-emulator-tryout
           scripts/start_docker.sh
           sleep 90
@@ -38,3 +32,8 @@ appium-android-emulator-tryout:
           popd
 
         popd
+
+      env: # Or as an environment variable
+        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
