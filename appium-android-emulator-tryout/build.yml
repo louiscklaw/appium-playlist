@@ -29,6 +29,7 @@ appium-android-emulator-tryout:
           echo 'list docker-compose status'
           docker-compose ps -a
           docker-compose logs
+          free -h
 
           echo 'testing python appium client'
           pushd tests/python
