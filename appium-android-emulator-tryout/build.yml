@@ -18,7 +18,7 @@ appium-android-emulator-tryout:
           scripts/start_docker.sh
 
           echo 'sleep to let docker emulator steady'
-          sleep 180
+          sleep 240
 
           echo 'testing python appium client'
           pushd tests/python
