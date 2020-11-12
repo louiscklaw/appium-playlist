@@ -44,7 +44,7 @@ jobs:
             pushd tests/python
               pipenv sync
               pipenv run pip list
-              pipenv run python3 ./helloworld.py
+              pipenv run python3 ./helloworld_4723.py
 
             popd
 
