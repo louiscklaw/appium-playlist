@@ -68,6 +68,8 @@ jobs:
   
           pushd appium-android-emulator-tryout
             scripts/start_docker.sh
+  
+            echo 'sleep to let docker emulator steady'
             sleep 90
   
             echo 'testing python appium client'
