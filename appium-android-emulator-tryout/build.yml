@@ -26,6 +26,9 @@ appium-android-emulator-tryout:
           echo 'sleep to let docker emulator steady'
           sleep 90
 
+          echo 'list docker-compose status'
+          docker-compose ps -a
+
           echo 'testing python appium client'
           pushd tests/python
             pipenv sync
