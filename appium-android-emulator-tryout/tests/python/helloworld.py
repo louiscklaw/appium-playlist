@@ -7,7 +7,7 @@ TEST_DIR=os.path.abspath(os.path.dirname(__file__))
 SCREENCAPTURE_DIR=os.path.abspath('{}/screen'.format(TEST_DIR))
 
 desired_caps = {}
-desired_caps['platformName'] = 'Android'
+desired_caps['platformName'] = 'android'
 # desired_caps['appPackage'] = 'net.openwritings.xmtl'
 # desired_caps['appActivity'] = '.MainActivity'
 # desired_caps['deviceName']='nexus_5_7.1.1'
