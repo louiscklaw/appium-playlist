@@ -4,52 +4,9 @@ on:
 
 jobs:
 
-  # 
-  # /home/logic/_workspace/appium-playlist/appium-android-7-tryout/build.yml
-  # 
-  appium-android-7-tryout:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: |
-          sudo apt update
-          sudo apt install -y python3 python3-pip python3-dev python3-wheel python3-setuptools
-          python3 -V
-          python3 -m pip install pipenv
-  
-          export PYTHON_BIN_PATH="$(python3 -m site --user-base)/bin"
-          export PATH="$PATH:$PYTHON_BIN_PATH"
-  
-          export LC_ALL=C.UTF-8
-          export LANG=C.UTF-8
-  
-          pushd appium-android-7-tryout
-            scripts/start_docker.sh
-            sleep 90
-  
-            echo 'testing python appium client'
-            pushd tests/python
-              pipenv sync
-              pipenv run python3 ./helloworld.py
-  
-            popd
-  
-            echo 'testing javascipt appium client'
-            pushd tests/javascript
-              yarn
-              node ./helloworld.js
-            popd
-  
-          popd
-  
-        env: # Or as an environment variable
-          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-  
-  # 
+  #
   # /home/logic/_workspace/appium-playlist/appium-android-emulator-tryout/build.yml
-  # 
+  #
   appium-android-emulator-tryout:
     runs-on: ubuntu-latest
     steps:
@@ -59,105 +16,103 @@ jobs:
           sudo apt install -y python3 python3-pip python3-dev python3-wheel python3-setuptools
           python3 -V
           python3 -m pip install pipenv
-  
+
           export PYTHON_BIN_PATH="$(python3 -m site --user-base)/bin"
           export PATH="$PATH:$PYTHON_BIN_PATH"
-  
+
           export LC_ALL=C.UTF-8
           export LANG=C.UTF-8
-  
+
           echo 'install docker-compose'
           sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
-  
-  
+
+
           pushd appium-android-emulator-tryout
             echo "bring up docker emulator"
             docker-compose up -d
-  
+
             echo 'sleep to let docker emulator steady'
             sleep 90
-  
+
             echo 'list docker-compose status'
             docker-compose ps -a
             docker-compose logs
             free -h
-  
+
             echo 'testing python appium client'
             pushd tests/python
               pipenv sync
               pipenv run python3 ./helloworld.py
-  
+
             popd
-  
+
           popd
-  
+
         env: # Or as an environment variable
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-  
-  
 
-  # 
+
+
+  #
   # /home/logic/_workspace/appium-playlist/github-build-merger/subjob.yml
-  # 
+  #
   test_merger:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
-  
+
       - name: run test
         env: # Or as an environment variable
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-  
+
         run: |
           sudo apt update
           sudo apt install -y python3 python3-pip python3-dev python3-wheel python3-setuptools
           python3 -V
           python3 -m pip install pipenv
-  
+
           export PYTHON_BIN_PATH="$(python3 -m site --user-base)/bin"
           export PATH="$PATH:$PYTHON_BIN_PATH"
-  
+
           export LC_ALL=C.UTF-8
           export LANG=C.UTF-8
-  
+
           pipenv --help
           github-build-merger/test.sh
-  
+
   merge:
     needs: [appium-android-7-tryout, appium-android-emulator-tryout, test_merger]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
-  
+
       - name: run merge
         env: # Or as an environment variable
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-  
+
         run: |
           sudo apt update
           sudo apt install -y python3 python3-pip python3-dev python3-wheel python3-setuptools
           python3 -V
           python3 -m pip install pipenv
-  
+
           export PYTHON_BIN_PATH="$(python3 -m site --user-base)/bin"
           export PATH="$PATH:$PYTHON_BIN_PATH"
-  
+
           export LC_ALL=C.UTF-8
           export LANG=C.UTF-8
-  
+
           cd github-build-merger
             pipenv sync
-  
+
             pipenv run python3 ./merge.py
           cd ..
-  
-  

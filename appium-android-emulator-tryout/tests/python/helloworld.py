@@ -1,27 +1,64 @@
+#!/usr/bin/env python3
+# https://www.selenium.dev/selenium/docs/api/py/webdriver_remote/selenium.webdriver.remote.webdriver.html#module-selenium.webdriver.remote.webdriver
+# https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities
 import os,sys
 from pprint import pprint
 
-from appium import webdriver
+import unittest
 
-TEST_DIR=os.path.abspath(os.path.dirname(__file__))
-SCREENCAPTURE_DIR=os.path.abspath('{}/screen'.format(TEST_DIR))
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-desired_caps = {}
-desired_caps['platformName'] = 'android'
-# desired_caps['appPackage'] = 'net.openwritings.xmtl'
-# desired_caps['appActivity'] = '.MainActivity'
-# desired_caps['deviceName']='nexus_5_7.1.1'
+SRC_DIR=os.path.dirname(__file__)
+SCREENSHOT_DIR=SRC_DIR+'/screenshot'
 
-# reference to server side
-# desired_caps['app'] = '/root/apk_pool/ApiDemos-debug.apk'
+SELENIUM_HUB_HOST='localhost'
 
-# This will launch your Android application.
-driver = webdriver.Remote('http://localhost:4444/wd/hub', desired_caps)
+class GoogleTestCase(unittest.TestCase):
 
-# search_box_element = driver.find_element_by_xpath('/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView')
+  def setUp(self):
+    # self.browser = webdriver.Chrome()
+    selenium_url = 'http://{}:4444/wd/hub'.format(SELENIUM_HUB_HOST)
+    print(selenium_url)
 
-# reference to machine running the script
-driver.save_screenshot('{}/capture_using_python.png'.format(SCREENCAPTURE_DIR))
+    self.browser = webdriver.Remote(
+      command_executor=selenium_url,
+      desired_capabilities = {
+        "platformName":"Android",
+        'app': '/root/apk_pool/ApiDemos-debug.apk'
+        })
+    self.addCleanup(self.browser.quit)
 
-# print(search_box_element)
-print('done')
+  def testPageTitle(self):
+    # self.browser.get('http://www.google.com')
+    # self.assertIn('Google', self.browser.title)
+    self.browser.save_screenshot('{}/hellogoogle.png'.format(SRC_DIR))
+
+    print('done')
+
+if __name__ == '__main__':
+  unittest.main(verbosity=2)
+
+
+# class GoogleTestCase(unittest.TestCase):
+
+#   def setUp(self):
+    # self.browser = webdriver.Remote(
+    #   command_executor='http://127.0.0.1:4444/wd/hub',
+    #   desired_capabilities = {'desired_capabilities': webdriver.DesiredCapabilities.CHROME.copy()})
+
+#     self.addCleanup(self.browser.quit)
+
+#   def testPageTitle(self):
+#     self.browser.get('http://www.google.com')
+#     self.assertIn('Google', self.browser.title)
+
+# if __name__ == '__main__':
+#   unittest.main(verbosity=2)
+
+
+# # driver = webdriver.Remote(
+# #    command_executor='http://127.0.0.1:4444/wd/hub',
+# #    desired_capabilities=DesiredCapabilities.OPERA)
+
+# # driver.go
