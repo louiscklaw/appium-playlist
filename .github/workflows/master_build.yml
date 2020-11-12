@@ -70,7 +70,7 @@ jobs:
             scripts/start_docker.sh
   
             echo 'sleep to let docker emulator steady'
-            sleep 120
+            sleep 180
   
             echo 'testing python appium client'
             pushd tests/python
