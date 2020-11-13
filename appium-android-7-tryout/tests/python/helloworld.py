@@ -24,3 +24,5 @@ search_box_element = driver.find_element_by_xpath('/hierarchy/android.widget.Fra
 driver.save_screenshot('{}/capture_using_python.png'.format(SCREENCAPTURE_DIR))
 
 print(search_box_element)
+
+driver.quit()
