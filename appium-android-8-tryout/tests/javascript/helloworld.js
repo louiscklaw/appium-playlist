@@ -10,9 +10,9 @@ const opts = {
   port: 4723,
   capabilities: {
     platformName: "Android",
-    platformVersion: "7.1.1",
+    platformVersion: "8.1",
     app: "/root/apk_pool/ApiDemos-debug.apk",
-    fullReset: true
+    // fullReset: true
     // deviceName: "nexus_5_7.1.1",
     // appPackage: "io.appium.android.apis",
     // appActivity: ".view.TextFields",

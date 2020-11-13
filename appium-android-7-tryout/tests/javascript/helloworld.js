@@ -12,7 +12,7 @@ const opts = {
     platformName: "Android",
     platformVersion: "7.1.1",
     app: "/root/apk_pool/ApiDemos-debug.apk",
-    fullReset: true
+    // fullReset: true
     // deviceName: "nexus_5_7.1.1",
     // appPackage: "io.appium.android.apis",
     // appActivity: ".view.TextFields",
