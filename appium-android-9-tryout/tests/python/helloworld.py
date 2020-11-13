@@ -10,7 +10,7 @@ desired_caps = {}
 desired_caps['platformName'] = 'Android'
 # desired_caps['appPackage'] = 'net.openwritings.xmtl'
 # desired_caps['appActivity'] = '.MainActivity'
-desired_caps['deviceName']='nexus_5_7.1.1'
+desired_caps['deviceName']='nexus_5_9.0'
 
 # reference to server side
 desired_caps['app'] = '/root/apk_pool/ApiDemos-debug.apk'
