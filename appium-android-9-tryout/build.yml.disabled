@@ -1,4 +1,4 @@
-appium-android-9-tryout:
+appium-android-8-tryout:
   runs-on: ubuntu-latest
   steps:
     - uses: actions/checkout@v2
@@ -14,7 +14,7 @@ appium-android-9-tryout:
         export LC_ALL=C.UTF-8
         export LANG=C.UTF-8
 
-        pushd appium-android-9-tryout
+        pushd appium-android-8-tryout
           scripts/start_docker.sh
           sleep 90
 
