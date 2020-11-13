@@ -7,22 +7,21 @@ TEST_DIR=os.path.abspath(os.path.dirname(__file__))
 SCREENCAPTURE_DIR=os.path.abspath('{}/screen'.format(TEST_DIR))
 
 desired_caps = {}
-desired_caps['platformName'] = 'Android'
+desired_caps['platformName'] = 'android'
 # desired_caps['appPackage'] = 'net.openwritings.xmtl'
 # desired_caps['appActivity'] = '.MainActivity'
-desired_caps['deviceName']='nexus_5_7.1.1'
+# desired_caps['deviceName']='nexus_5_7.1.1'
 
 # reference to server side
-desired_caps['app'] = '/root/apk_pool/ApiDemos-debug.apk'
+# desired_caps['app'] = '/root/apk_pool/ApiDemos-debug.apk'
 
 # This will launch your Android application.
 driver = webdriver.Remote('http://localhost:4444/wd/hub', desired_caps)
 
-search_box_element = driver.find_element_by_xpath('/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView')
+# search_box_element = driver.find_element_by_xpath('/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView')
 
 # reference to machine running the script
 driver.save_screenshot('{}/capture_using_python.png'.format(SCREENCAPTURE_DIR))
 
-print(search_box_element)
-
-driver.quit()
+# print(search_box_element)
+print('done')

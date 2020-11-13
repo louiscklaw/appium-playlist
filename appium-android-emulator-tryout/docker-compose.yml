@@ -10,21 +10,21 @@ services:
     ports:
       - 4444:4444
 
-  # Using Appium Docker Android
-  real_device:
-    image: appium/appium
-    depends_on:
-      - selenium_hub
-    # network_mode: "service:selenium_hub"
-    privileged: true
-    volumes:
-      - /dev/bus/usb:/dev/bus/usb
-      - ~/.android:/root/.android
-    environment:
-      - CONNECT_TO_GRID=true
-      - SELENIUM_HOST=selenium_hub
-      # Enable it for msite testing
-      #- BROWSER_NAME=chrome
+  # # Using Appium Docker Android
+  # real_device:
+  #   image: appium/appium
+  #   depends_on:
+  #     - selenium_hub
+  #   # network_mode: "service:selenium_hub"
+  #   privileged: true
+  #   volumes:
+  #     - /dev/bus/usb:/dev/bus/usb
+  #     - ~/.android:/root/.android
+  #   environment:
+  #     - CONNECT_TO_GRID=true
+  #     - SELENIUM_HOST=selenium_hub
+  #     # Enable it for msite testing
+  #     #- BROWSER_NAME=chrome
 
   # Docker-Android for Android application testing
   nexus_7.1.1:
@@ -34,7 +34,7 @@ services:
     scale: 1
     depends_on:
       - selenium_hub
-      - real_device
+      # - real_device
     ports:
       - 4723:4723
       - 6080:6080
