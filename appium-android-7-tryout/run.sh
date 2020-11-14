@@ -2,6 +2,14 @@
 
 set -ex
 
+trap 'catch' ERR EXIT KILL
+catch() {
+  echo 'exit script, shutdown docker...'
+  scripts/down_docker.sh
+}
 
+scripts/down_docker.sh | true
 scripts/start_docker.sh
-scripts/run_test.sh
+sleep 90
+
+test.sh
