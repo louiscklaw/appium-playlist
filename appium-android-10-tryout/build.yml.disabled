@@ -1,3 +1,4 @@
+# disabled as docker unhealthy in github actions
 appium-android-8-tryout:
   runs-on: ubuntu-latest
   steps:
