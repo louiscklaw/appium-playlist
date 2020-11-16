@@ -1,0 +1,16 @@
+{
+  "name": "appcrawler-helloworld-tryout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "helloworld.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "wd": "^1.13.0",
+    "wd-bridge": "0.0.2"
+  }
+}

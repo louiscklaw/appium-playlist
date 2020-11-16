@@ -4,7 +4,7 @@
   "description": "Appium sample code using 'wd'",
   "type": "module",
   "scripts": {
-    "test": "mocha test/**/*.test.js",
+    "test": "mocha --timeout 10000 basic/*.test.js",
     "clean": "rm -rf node_modules && rm -f package-lock.json && npm install"
   },
   "author": "Dan Graham",

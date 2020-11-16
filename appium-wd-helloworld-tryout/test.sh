@@ -11,5 +11,5 @@ set -ex
 
 echo 'testing javascipt appium client'
 pushd tests/javascript_wd
-  ./test.sh
+  npm test
 popd

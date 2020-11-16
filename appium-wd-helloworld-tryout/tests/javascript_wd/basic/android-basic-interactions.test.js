@@ -14,9 +14,7 @@ describe('Basic Android interactions', function () {
 
   before(async function () {
     // Connect to Appium server
-    driver = SAUCE_TESTING
-      ? await wd.promiseChainRemote(serverConfig)
-      : await wd.promiseChainRemote(serverConfig, SAUCE_USERNAME, SAUCE_ACCESS_KEY);
+    driver = await wd.promiseChainRemote(serverConfig)
 
     // merge all the capabilities
     const caps = {

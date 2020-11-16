@@ -12,4 +12,4 @@ scripts/down_docker.sh | true
 scripts/start_docker.sh
 sleep 90
 
-test.sh
+./test.sh
