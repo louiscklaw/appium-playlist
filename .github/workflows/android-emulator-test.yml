@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         android_image:
-          - system-images;android-27;google_apis;x86_64
+          - system-images;android-27;google_apis;x86
           # - system-images;android-28;google_apis;x86_64
           # - system-images;android-29;google_apis;x86_64
           # - system-images;android-30;google_apis;x86_64
