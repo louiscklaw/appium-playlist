@@ -1,0 +1,159 @@
+name: master_build
+on:
+  push:
+
+jobs:
+
+  # 
+  # /home/logic/_workspace/appium-playlist/appium-helloworld-tryout/build.yml
+  # 
+  appium-helloworld-tryout:
+    name: Mobile Chrome Test
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        ansdroid_api_ver:
+          - android-30
+        android_device:
+          - pixel
+  
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v1
+  
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.16.3'
+  
+      - name: turn on android emulators
+        run: |
+          ANDROID_NAMES=(android_a)
+          ADB_ANDROIDS=('adb -s emulator-5554')
+  
+          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;${{ matrix.ansdroid_api_ver }};google_apis;x86_64'
+  
+          $ANDROID_HOME/tools/bin/sdkmanager --list
+          $ANDROID_HOME/tools/bin/avdmanager list
+  
+          echo ${ADB_ANDROIDS[0]}
+          echo ${ANDROID_NAMES[0]}
+  
+          ACTIVE_ANDROID_NAME=${ANDROID_NAMES[0]}
+          ACTIVE_ADB_ANDROID=${ADB_ANDROIDS[0]}
+  
+          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --device "${{ matrix.android_device }}" -n $ACTIVE_ANDROID_NAME -k 'system-images;${{ matrix.ansdroid_api_ver }};google_apis;x86_64' --force --sdcard 512M
+  
+          nohup $ANDROID_HOME/emulator/emulator -avd $ACTIVE_ANDROID_NAME -no-snapshot > /dev/null 2>&1 &
+  
+          $ANDROID_HOME/platform-tools/$ACTIVE_ADB_ANDROID wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+  
+          $ANDROID_HOME/platform-tools/adb devices
+          echo 'emulator boot complete'
+          adb devices -l
+  
+      - name: Set up Appium
+        run: npm install appium@1.15.0
+  
+      - name: Run Appium Server
+        run: ./node_modules/.bin/appium --log-timestamp --log-no-colors --allow-insecure chromedriver_autodownload > appium.log &
+  
+      # - name: Build with Gradle
+      #   run: gradle cleanTest test --tests "com.example.chrome.MobileChromeTest"
+      #   continue-on-error: true
+  
+      - name: install sample apk
+        run: |
+          adb -s emulator-5554 install apk_pool/ApiDemos-debug.apk
+  
+      - name: check python version
+        run: |
+          python3 -V
+          python3 -m pip install pip --upgrade
+          python3 -m pip install pipenv
+          pipenv --version
+  
+      - name: python appium test
+        run: |
+          echo 'start python appium test'
+          cd appium-helloworld-tryout
+            pipenv sync
+            pipenv run python3 main.py
+          cd -
+  
+      - name: Upload logs
+        uses: actions/upload-artifact@v1
+        with:
+          name: appium.log
+          path: appium.log
+  
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v1
+        with:
+          name: screenshots_${{ matrix.ansdroid_api_ver }}
+          path: github-android-emulator-tryout/screens
+  
+  
+
+  # 
+  # /home/logic/_workspace/appium-playlist/github-build-merger/subjob.yml
+  # 
+  test_merger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+  
+      - name: run test
+        env: # Or as an environment variable
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+  
+        run: |
+          sudo apt update
+          sudo apt install -y python3 python3-pip python3-dev python3-wheel python3-setuptools
+          python3 -V
+          python3 -m pip install pipenv
+  
+          export PYTHON_BIN_PATH="$(python3 -m site --user-base)/bin"
+          export PATH="$PATH:$PYTHON_BIN_PATH"
+  
+          export LC_ALL=C.UTF-8
+          export LANG=C.UTF-8
+  
+          pipenv --help
+          github-build-merger/test.sh
+  
+  merge:
+    needs: [appium-helloworld-tryout, test_merger]
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+  
+      - name: run merge
+        env: # Or as an environment variable
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+  
+        run: |
+          sudo apt update
+          sudo apt install -y python3 python3-pip python3-dev python3-wheel python3-setuptools
+          python3 -V
+          python3 -m pip install pipenv
+  
+          export PYTHON_BIN_PATH="$(python3 -m site --user-base)/bin"
+          export PATH="$PATH:$PYTHON_BIN_PATH"
+  
+          export LC_ALL=C.UTF-8
+          export LANG=C.UTF-8
+  
+          cd github-build-merger
+            pipenv sync
+  
+            pipenv run python3 ./merge.py
+          cd ..
+  
+  

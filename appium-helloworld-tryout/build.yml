@@ -1,4 +1,4 @@
-build:
+appium-helloworld-tryout:
   name: Mobile Chrome Test
   runs-on: macOS-latest
   strategy:
