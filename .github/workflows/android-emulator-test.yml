@@ -26,8 +26,20 @@ jobs:
 
       - name: turn on android emulators
         run: |
-          ANDROID_NAMES=(android_emu_a android_emu_b android_emu_c)
-          ADB_ANDROIDS=('adb -s emulator-5554' 'adb -s emulator-5556' 'adb -s emulator-5558')
+          ANDROID_NAMES=(\
+            android_a \
+            android_b \
+            android_c \
+            android_d \
+            android_e \
+            )
+          ADB_ANDROIDS=(\
+            'adb -s emulator-5554' \
+            'adb -s emulator-5556' \
+            'adb -s emulator-5558' \
+            'adb -s emulator-5560' \
+            'adb -s emulator-5562' \
+            )
 
           echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install '${{ matrix.android_image }}'
 
@@ -35,7 +47,7 @@ jobs:
           $ANDROID_HOME/tools/bin/avdmanager list
 
 
-          for i in {0..2}
+          for i in {0..4}
           do
             echo ${ADB_ANDROIDS[$i]}
             echo ${ANDROID_NAMES[$i]}
@@ -59,7 +71,7 @@ jobs:
           adb devices -l
 
 
-          for i in {0..2}
+          for i in {0..4}
           do
             while [ "$($ACTIVE_ADB_ANDROID shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
               echo "Still waiting for boot.."
