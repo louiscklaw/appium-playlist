@@ -93,11 +93,11 @@ jobs:
       #   run: gradle cleanTest test --tests "com.example.chrome.MobileChromeTest"
       #   continue-on-error: true
 
-      - name: install sample apk
-        run: |
-          adb -s emulator-5554 install apk_pool/ApiDemos-debug.apk
-          adb -s emulator-5556 install apk_pool/ApiDemos-debug.apk
-          adb -s emulator-5558 install apk_pool/ApiDemos-debug.apk
+      # - name: install sample apk
+      #   run: |
+      #     adb -s emulator-5554 install apk_pool/ApiDemos-debug.apk
+      #     adb -s emulator-5556 install apk_pool/ApiDemos-debug.apk
+      #     adb -s emulator-5558 install apk_pool/ApiDemos-debug.apk
 
       - name: check python version
         run: |
