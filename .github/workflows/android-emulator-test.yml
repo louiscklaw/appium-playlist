@@ -10,8 +10,6 @@ jobs:
     strategy:
       matrix:
         ansdroid_api_ver:
-          - android-28
-          - android-29
           - android-30
         android_device:
           - pixel
