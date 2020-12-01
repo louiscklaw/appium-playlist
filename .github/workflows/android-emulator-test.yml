@@ -73,9 +73,12 @@ jobs:
       - name: Run Appium Server
         run: ./node_modules/.bin/appium --log-timestamp --log-no-colors --allow-insecure chromedriver_autodownload > appium.log &
 
-      - name: Build with Gradle
-        run: gradle cleanTest test --tests "com.example.chrome.MobileChromeTest"
-        continue-on-error: true
+      # - name: Build with Gradle
+      #   run: gradle cleanTest test --tests "com.example.chrome.MobileChromeTest"
+      #   continue-on-error: true
+
+      - name: install sample apk
+        run: adb -s emulator-5554 install apk_pool/ApiDemos-debug.apk
 
       - name: check python version
         run: |
