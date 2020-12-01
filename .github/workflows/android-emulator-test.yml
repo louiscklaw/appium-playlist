@@ -10,6 +10,8 @@ jobs:
       matrix:
         android_image:
           - system-images;android-27;google_apis;x86
+          - system-images;android-28;google_apis;x86_64
+          - system-images;android-29;google_apis;x86_64
 
     steps:
       - name: Checkout source code
