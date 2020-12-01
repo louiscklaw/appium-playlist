@@ -14,7 +14,7 @@ jobs:
           # - system-images;android-29;google_apis;x86_64
           # - system-images;android-30;google_apis;x86_64
         android_device:
-          - Pixel 4
+          - 5.4in FWVGA
 
     steps:
       - name: Checkout source code
