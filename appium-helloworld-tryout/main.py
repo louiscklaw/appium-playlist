@@ -7,7 +7,9 @@ desired_caps['platformName'] = 'Android'
 # desired_caps['deviceName']='nexus_5_7.1.1'
 
 # reference to server side
-desired_caps['app'] = '/root/apk_pool/sample_apk_debug.apk'
+desired_caps['app'] = 'apk_pool/ApiDemos-debug.apk'
 
 # This will launch your Android application.
-driver = webdriver.Remote('http://localhost:4444/wd/hub', desired_caps)
+driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+
+driver.save_screenshot('screens/helloworld.png')
