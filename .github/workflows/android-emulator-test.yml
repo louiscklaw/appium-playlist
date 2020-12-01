@@ -13,6 +13,8 @@ jobs:
           # - system-images;android-28;google_apis;x86_64
           # - system-images;android-29;google_apis;x86_64
           # - system-images;android-30;google_apis;x86_64
+        android_device:
+          - Pixel 4
 
     steps:
       - name: Checkout source code
@@ -38,7 +40,7 @@ jobs:
             ACTIVE_ANDROID_NAME=${ANDROID_NAMES[$i]}
             ACTIVE_ADB_ANDROID=${ADB_ANDROIDS[$i]}
 
-            echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --device "Pixel 4" -n $ACTIVE_ANDROID_NAME -k '${{ matrix.android_image }}' --force --skin WVGA800 --sdcard 512M
+            echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --device "${{ matrix.android_device }}" -n $ACTIVE_ANDROID_NAME -k '${{ matrix.android_image }}' --force --skin WVGA800 --sdcard 512M
 
             nohup $ANDROID_HOME/emulator/emulator -avd $ACTIVE_ANDROID_NAME -no-snapshot > /dev/null 2>&1 &
 
