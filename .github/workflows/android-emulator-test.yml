@@ -35,7 +35,7 @@ jobs:
             ACTIVE_ANDROID_NAME=${ANDROID_NAMES[$i]}
             ACTIVE_ADB_ANDROID=${ADB_ANDROIDS[$i]}
 
-            echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n $ACTIVE_ANDROID_NAME -k 'system-images;android-27;google_apis;x86' --force
+            echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n $ACTIVE_ANDROID_NAME -k '${{ matrix.android_image }}' --force
 
             nohup $ANDROID_HOME/emulator/emulator -avd $ACTIVE_ANDROID_NAME -no-snapshot > /dev/null 2>&1 &
 
