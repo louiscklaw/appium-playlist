@@ -22,7 +22,7 @@ jobs:
 
           echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-27;google_apis;x86'
 
-          for i in {0..1}
+          for i in {0..2}
           do
             echo ${ADB_ANDROIDS[$i]}
             echo ${ANDROID_NAMES[$i]}
@@ -46,7 +46,7 @@ jobs:
           adb devices -l
 
 
-          for i in {0..1}
+          for i in {0..2}
           do
             while [ "$($ACTIVE_ADB_ANDROID shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
               echo "Still waiting for boot.."
