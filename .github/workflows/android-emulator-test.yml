@@ -31,8 +31,8 @@ jobs:
 
           echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install '${{ matrix.android_image }}'
 
-          sdkmanager --list
-          avdmanager list
+          $ANDROID_HOME/tools/bin/sdkmanager --list
+          $ANDROID_HOME/tools/bin/avdmanager list
 
 
           for i in {0..2}
