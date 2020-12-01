@@ -46,8 +46,7 @@ jobs:
           $ANDROID_HOME/tools/bin/sdkmanager --list
           $ANDROID_HOME/tools/bin/avdmanager list
 
-
-          for i in {0..4}
+          for i in {0..3}
           do
             echo ${ADB_ANDROIDS[$i]}
             echo ${ANDROID_NAMES[$i]}
@@ -62,14 +61,15 @@ jobs:
             $ANDROID_HOME/platform-tools/$ACTIVE_ADB_ANDROID wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
           done
 
+          echo "create a tablet device start"
+          ACTIVE_ANDROID_NAME=${ANDROID_NAMES[4]}
+          ACTIVE_ADB_ANDROID=${ADB_ANDROIDS[4]}
+          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --device "Nexus 10" -n $ACTIVE_ANDROID_NAME -k '${{ matrix.android_image }}' --force --sdcard 512M
+          nohup $ANDROID_HOME/emulator/emulator -avd $ACTIVE_ANDROID_NAME -no-snapshot > /dev/null 2>&1 &
+          $ANDROID_HOME/platform-tools/$ACTIVE_ADB_ANDROID wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+          echo "create a tablet device end"
+
           echo $ANDROID_HOME/emulator/emulator -list-avds
-
-          $ANDROID_HOME/platform-tools/adb devices
-
-          echo 'emulator boot complete'
-
-          adb devices -l
-
 
           for i in {0..4}
           do
@@ -78,6 +78,10 @@ jobs:
               sleep 1
             done
           done
+
+          $ANDROID_HOME/platform-tools/adb devices
+          echo 'emulator boot complete'
+          adb devices -l
 
       - name: Set up Appium
         run: npm install appium@1.15.0
