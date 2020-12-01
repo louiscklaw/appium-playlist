@@ -15,44 +15,44 @@ jobs:
         with:
           node-version: '10.16.3'
 
-      # - name: turn on android emulators
-      #   run: |
-      #     ANDROID_NAMES=(android_emu_a android_emu_b android_emu_c)
-      #     ADB_ANDROIDS=('adb -s emulator-5554' 'adb -s emulator-5556' 'adb -s emulator-5558')
+      - name: turn on android emulators
+        run: |
+          ANDROID_NAMES=(android_emu_a android_emu_b android_emu_c)
+          ADB_ANDROIDS=('adb -s emulator-5554' 'adb -s emulator-5556' 'adb -s emulator-5558')
 
-      #     echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-27;google_apis;x86'
+          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-27;google_apis;x86'
 
-      #     for i in {0..1}
-      #     do
-      #       echo ${ADB_ANDROIDS[$i]}
-      #       echo ${ANDROID_NAMES[$i]}
+          for i in {0..1}
+          do
+            echo ${ADB_ANDROIDS[$i]}
+            echo ${ANDROID_NAMES[$i]}
 
-      #       ACTIVE_ANDROID_NAME=${ANDROID_NAMES[$i]}
-      #       ACTIVE_ADB_ANDROID=${ADB_ANDROIDS[$i]}
+            ACTIVE_ANDROID_NAME=${ANDROID_NAMES[$i]}
+            ACTIVE_ADB_ANDROID=${ADB_ANDROIDS[$i]}
 
-      #       echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n $ACTIVE_ANDROID_NAME -k 'system-images;android-27;google_apis;x86' --force
+            echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n $ACTIVE_ANDROID_NAME -k 'system-images;android-27;google_apis;x86' --force
 
-      #       nohup $ANDROID_HOME/emulator/emulator -avd $ACTIVE_ANDROID_NAME -no-snapshot > /dev/null 2>&1 &
+            nohup $ANDROID_HOME/emulator/emulator -avd $ACTIVE_ANDROID_NAME -no-snapshot > /dev/null 2>&1 &
 
-      #       $ANDROID_HOME/platform-tools/$ACTIVE_ADB_ANDROID wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
-      #     done
+            $ANDROID_HOME/platform-tools/$ACTIVE_ADB_ANDROID wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+          done
 
-      #     echo $ANDROID_HOME/emulator/emulator -list-avds
+          echo $ANDROID_HOME/emulator/emulator -list-avds
 
-      #     $ANDROID_HOME/platform-tools/adb devices
+          $ANDROID_HOME/platform-tools/adb devices
 
-      #     echo 'emulator boot complete'
+          echo 'emulator boot complete'
 
-      #     adb devices -l
+          adb devices -l
 
 
-      #     for i in {0..1}
-      #     do
-      #       while [ "$($ACTIVE_ADB_ANDROID shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
-      #         echo "Still waiting for boot.."
-      #         sleep 1
-      #       done
-      #     done
+          for i in {0..1}
+          do
+            while [ "$($ACTIVE_ADB_ANDROID shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
+              echo "Still waiting for boot.."
+              sleep 1
+            done
+          done
 
       - name: Set up Appium
         run: npm install appium@1.15.0
