@@ -8,12 +8,8 @@ jobs:
     runs-on: macOS-latest
     strategy:
       matrix:
-        os:
-          - ubuntu-16.04
-          - ubuntu-18.04
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
+        android_image:
+          - system-images;android-27;google_apis;x86
 
     steps:
       - name: Checkout source code
@@ -29,7 +25,7 @@ jobs:
           ANDROID_NAMES=(android_emu_a android_emu_b android_emu_c)
           ADB_ANDROIDS=('adb -s emulator-5554' 'adb -s emulator-5556' 'adb -s emulator-5558')
 
-          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-27;google_apis;x86'
+          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install '${{ matrix.android_image }}'
 
           for i in {0..2}
           do
