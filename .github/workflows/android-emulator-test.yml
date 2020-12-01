@@ -1,0 +1,127 @@
+name: Android Emulator Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Mobile Chrome Test
+    runs-on: macOS-latest
+    steps:
+      # - name: Checkout source code
+      #   uses: actions/checkout@v1
+
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: '10.16.3'
+
+      - name: turn on android emulators
+        run: |
+          ANDROID_NAMES=(android_emu_a android_emu_b android_emu_c)
+          ADB_ANDROIDS=('adb -s emulator-5554' 'adb -s emulator-5556' 'adb -s emulator-5558')
+
+          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-27;google_apis;x86'
+
+          for i in {0..1}
+          do
+            echo ${ADB_ANDROIDS[$i]}
+            echo ${ANDROID_NAMES[$i]}
+
+            ACTIVE_ANDROID_NAME=${ANDROID_NAMES[$i]}
+            ACTIVE_ADB_ANDROID=${ADB_ANDROIDS[$i]}
+
+            echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n $ACTIVE_ANDROID_NAME -k 'system-images;android-27;google_apis;x86' --force
+
+            nohup $ANDROID_HOME/emulator/emulator -avd $ACTIVE_ANDROID_NAME -no-snapshot > /dev/null 2>&1 &
+
+            $ANDROID_HOME/platform-tools/$ACTIVE_ADB_ANDROID wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+          done
+
+          echo $ANDROID_HOME/emulator/emulator -list-avds
+
+          $ANDROID_HOME/platform-tools/adb devices
+
+          echo 'emulator boot complete'
+
+          adb devices -l
+
+
+          for i in {0..1}
+          do
+            while [ "$($ACTIVE_ADB_ANDROID shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
+              echo "Still waiting for boot.."
+              sleep 1
+            done
+          done
+      # - name: turn on android emulators
+      #   env:
+      #     ANDROID_NAMES: (xamarin_android_emulator_a xamarin_android_emulator_b)
+      #     ADB_ANDROIDS: ('adb -s emulator-5554' 'adb -s emulator-5556')
+      #   run: |
+      #     echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-27;google_apis;x86'
+
+      #     echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n xamarin_android_emulator_a -k 'system-images;android-27;google_apis;x86' --force
+      #     echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n xamarin_android_emulator_b -k 'system-images;android-27;google_apis;x86' --force
+
+
+      #     echo "Starting emulator"
+      #     nohup $ANDROID_HOME/emulator/emulator -avd xamarin_android_emulator_a -no-snapshot > /dev/null 2>&1 &
+      #     nohup $ANDROID_HOME/emulator/emulator -avd xamarin_android_emulator_b -no-snapshot > /dev/null 2>&1 &
+
+      #     $ANDROID_HOME/platform-tools/adb -s emulator-5554 wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+
+      #     $ANDROID_HOME/platform-tools/adb -s  emulator-5556 wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+
+      #     echo $ANDROID_HOME/emulator/emulator -list-avds
+
+      #     $ANDROID_HOME/platform-tools/adb devices
+      #     echo "Emulator started"
+
+      #     while [ "$(adb -s emulator-5554 shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
+      #       echo "Still waiting for boot.."
+      #       sleep 1
+      #     done
+
+      #     while [ "$(adb -s emulator-5556 shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
+      #       echo "Still waiting for boot.."
+      #       sleep 1
+      #     done
+
+      #     echo 'emulator boot complete'
+
+      #     adb devices -l
+
+      - name: Set up Appium
+        run: npm install appium@1.15.0
+      - name: Run Appium Server
+        run: ./node_modules/.bin/appium --log-timestamp --log-no-colors --allow-insecure chromedriver_autodownload > appium.log &
+      - name: Build with Gradle
+        run: gradle cleanTest test --tests "com.example.chrome.MobileChromeTest"
+        continue-on-error: true
+
+      - name: check python version
+        run: |
+          python3 -V
+          python3 -m pip install pip --upgrade
+          python3 -m pip install pipenv
+          pipenv --version
+
+      - name: python appium test
+        run: |
+          echo 'start python appium test'
+          cd github-android-emulator-tryout
+            pipenv sync
+            pipenv run python3 appium-helloworld.py
+          cd -
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v1
+        with:
+          name: appium.log
+          path: appium.log
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v1
+        with:
+          name: screenshots
+          path: github-android-emulator-tryout/screens
