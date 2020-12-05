@@ -3,9 +3,9 @@
 set -ex
 
 ACTIVE_ANDROID_NAME=tablet_a
-ACTIVE_ADB_ANDROID='adb -s emulator-5562'
+ACTIVE_ADB_ANDROID='adb -s emulator-5556'
 
-# adb -s emulator-5562 emu kill
+# adb -s emulator-5554 emu kill
 
 echo "create a tablet device start"
 
