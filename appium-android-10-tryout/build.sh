@@ -32,7 +32,7 @@ do
   ACTIVE_ANDROID_NAME=${ANDROID_NAMES[$i]}
   ACTIVE_ADB_ANDROID=${ADB_ANDROIDS[$i]}
 
-  echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --device "${{ matrix.android_device }}" -n $ACTIVE_ANDROID_NAME -k 'system-images;${{ matrix.ansdroid_api_ver }};google_apis;x86_64' --force --sdcard 512M
+  echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --device "pixel" -n $ACTIVE_ANDROID_NAME -k 'system-images;android-30;google_apis;x86_64' --force --sdcard 512M
 
   nohup $ANDROID_HOME/emulator/emulator -avd $ACTIVE_ANDROID_NAME -no-snapshot > /dev/null 2>&1 &
 
