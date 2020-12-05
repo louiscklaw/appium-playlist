@@ -2,6 +2,9 @@
 
 set -ex
 
-npm install appium@1.15.0
+npm install appium
 
-./node_modules/.bin/appium --log-timestamp --log-no-colors --allow-insecure chromedriver_autodownload > appium.log &
+./node_modules/.bin/appium \
+  --log-timestamp \
+  --log-no-colors \
+  --allow-insecure chromedriver_autodownload > appium.log &
