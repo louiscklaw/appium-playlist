@@ -17,8 +17,11 @@ echo "create a tablet device end"
 
 echo $ANDROID_HOME/emulator/emulator -list-avds
 
-# TODO: activate me
-# while [ "$($ACTIVE_ADB_ANDROID shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
-#   echo "Still waiting for boot.."
-#   sleep 1
-# done
+while [ "$($ACTIVE_ADB_ANDROID shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
+  echo "Still waiting for boot.."
+  sleep 1
+done
+
+echo 'boot tablet done'
+
+exit 0
