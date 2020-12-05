@@ -5,6 +5,8 @@ set -ex
 ACTIVE_ANDROID_NAME=tablet_a
 ACTIVE_ADB_ANDROID='adb -s emulator-5562'
 
+# adb -s emulator-5562 emu kill
+
 echo "create a tablet device start"
 
 echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --device "Nexus 10" -n $ACTIVE_ANDROID_NAME -k 'system-images;android-30;google_apis;x86_64' --force --sdcard 512M
