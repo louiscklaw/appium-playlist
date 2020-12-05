@@ -1,4 +1,4 @@
-name: master_build
+name: test-macos
 on:
   push:
     branches:
