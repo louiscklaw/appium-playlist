@@ -13,4 +13,8 @@ echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --device "pixel" -n an
 $ANDROID_HOME/emulator/emulator -avd android_c -no-snapshot &
 # nohup $ANDROID_HOME/emulator/emulator -avd android_c -no-snapshot > /dev/null 2>&1 &
 
-$ANDROID_HOME/platform-tools/adb -s emulator-5554 wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+$ANDROID_HOME/platform-tools/adb -s emulator-5554 wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 5; done; input keyevent 82'
+
+
+echo 'android phone start done'
+exit 0
