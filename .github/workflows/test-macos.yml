@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: |
-        cd appium-android-10-tryout
-          ./build.sh
+          cd appium-android-10-tryout
+            ./build.sh
 
-        cd -
+          cd -
