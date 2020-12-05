@@ -2,8 +2,8 @@
 
 set -ex
 
-ACTIVE_ANDROID_NAME=${ANDROID_NAMES[4]}
-ACTIVE_ADB_ANDROID=${ADB_ANDROIDS[4]}
+ACTIVE_ANDROID_NAME=tablet_a
+ACTIVE_ADB_ANDROID='adb -s emulator-5562'
 
 echo "create a tablet device start"
 
