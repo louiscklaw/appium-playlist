@@ -1,7 +1,10 @@
 # https://gs.statcounter.com/android-version-market-share/mobile-tablet/japan
 name: Android Emulator Test
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:

@@ -1,7 +1,8 @@
 name: master_build
 on:
   push:
-
+    branches:
+      - master
 jobs:
 
   #
