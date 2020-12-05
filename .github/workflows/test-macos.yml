@@ -1,0 +1,21 @@
+name: master_build
+on:
+  push:
+    branches:
+      - test/test-macos/helloworld
+jobs:
+
+  #
+  # /home/logic/_workspace/appium-playlist/appium-start-stop-tryout/build.yml
+  #
+
+  test-android-macos:
+    name: appium-start-stop-tryout
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: |
+        cd appium-android-10-tryout
+          ./build.sh
+
+        cd -
