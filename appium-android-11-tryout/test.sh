@@ -2,6 +2,19 @@
 
 set -ex
 
+pipenv -v
+python3 -V
+
+trap 'catch' ERR EXIT KILL
+catch() {
+  echo 'exit script, shutdown docker...'
+  scripts/down_docker.sh
+}
+
+scripts/down_docker.sh | true
+scripts/start_docker.sh
+sleep 90
+
 echo 'testing python appium client'
 pushd tests/python
   pipenv sync
