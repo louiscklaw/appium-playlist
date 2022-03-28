@@ -2,6 +2,9 @@
 
 set -ex
 
+pipenv -v
+python3 -V
+
 trap 'catch' ERR EXIT KILL
 catch() {
   echo 'exit script, shutdown docker...'
@@ -18,7 +21,6 @@ pushd tests/python
   pipenv run python3 ./helloworld.py
 
 popd
-
 
 echo 'testing javascipt appium client'
 pushd tests/javascript
