@@ -15,7 +15,8 @@ set -ex
 echo 'testing python appium client'
 pushd tests/python
   pipenv sync
-  pipenv run python3 ./helloworld.py
+  # pipenv run python3 ./helloworld.py
+  pipenv run python3 ./helloworld_4723.py
 
 popd
 

@@ -21,6 +21,7 @@ appium-android-8-tryout:
           echo 'testing python appium client'
           pushd tests/python
             pipenv sync
+            pipenv run pip list
             pipenv run python3 ./helloworld.py
 
           popd

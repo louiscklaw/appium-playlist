@@ -8,4 +8,4 @@ verify_ssl = true
 [packages]
 pytest = "*"
 sauceclient = "*"
-Appium-Python-Client = ">=0.28"
+Appium-Python-Client = "*"
