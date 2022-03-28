@@ -1,0 +1,131 @@
+# https://gs.statcounter.com/android-version-market-share/mobile-tablet/japan
+name: Android Emulator Test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Mobile Chrome Test
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        ansdroid_api_ver:
+          - android-30
+        android_device:
+          - pixel
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.16.3'
+
+      - name: turn on android emulators
+        run: |
+          ANDROID_NAMES=(\
+            android_a \
+            android_b \
+            android_c \
+            android_d \
+            android_e \
+            )
+          ADB_ANDROIDS=(\
+            'adb -s emulator-5554' \
+            'adb -s emulator-5556' \
+            'adb -s emulator-5558' \
+            'adb -s emulator-5560' \
+            'adb -s emulator-5562' \
+            )
+
+          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;${{ matrix.ansdroid_api_ver }};google_apis;x86_64'
+
+          $ANDROID_HOME/tools/bin/sdkmanager --list
+          $ANDROID_HOME/tools/bin/avdmanager list
+
+          for i in {0..3}
+          do
+            echo ${ADB_ANDROIDS[$i]}
+            echo ${ANDROID_NAMES[$i]}
+
+            ACTIVE_ANDROID_NAME=${ANDROID_NAMES[$i]}
+            ACTIVE_ADB_ANDROID=${ADB_ANDROIDS[$i]}
+
+            echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --device "${{ matrix.android_device }}" -n $ACTIVE_ANDROID_NAME -k 'system-images;${{ matrix.ansdroid_api_ver }};google_apis;x86_64' --force --sdcard 512M
+
+            nohup $ANDROID_HOME/emulator/emulator -avd $ACTIVE_ANDROID_NAME -no-snapshot > /dev/null 2>&1 &
+
+            $ANDROID_HOME/platform-tools/$ACTIVE_ADB_ANDROID wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+          done
+
+          echo "create a tablet device start"
+          ACTIVE_ANDROID_NAME=${ANDROID_NAMES[4]}
+          ACTIVE_ADB_ANDROID=${ADB_ANDROIDS[4]}
+          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --device "Nexus 10" -n $ACTIVE_ANDROID_NAME -k 'system-images;${{ matrix.ansdroid_api_ver }};google_apis;x86_64' --force --sdcard 512M
+          nohup $ANDROID_HOME/emulator/emulator -avd $ACTIVE_ANDROID_NAME -no-snapshot > /dev/null 2>&1 &
+          $ANDROID_HOME/platform-tools/$ACTIVE_ADB_ANDROID wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+          echo "create a tablet device end"
+
+          echo $ANDROID_HOME/emulator/emulator -list-avds
+
+          for i in {0..4}
+          do
+            while [ "$($ACTIVE_ADB_ANDROID shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
+              echo "Still waiting for boot.."
+              sleep 1
+            done
+          done
+
+          $ANDROID_HOME/platform-tools/adb devices
+          echo 'emulator boot complete'
+          adb devices -l
+
+      - name: Set up Appium
+        run: npm install appium@1.15.0
+
+      - name: Run Appium Server
+        run: ./node_modules/.bin/appium --log-timestamp --log-no-colors --allow-insecure chromedriver_autodownload > appium.log &
+
+      # - name: Build with Gradle
+      #   run: gradle cleanTest test --tests "com.example.chrome.MobileChromeTest"
+      #   continue-on-error: true
+
+      - name: install sample apk
+        run: |
+          adb -s emulator-5554 install apk_pool/ApiDemos-debug.apk
+          adb -s emulator-5556 install apk_pool/ApiDemos-debug.apk
+          adb -s emulator-5558 install apk_pool/ApiDemos-debug.apk
+          adb -s emulator-5560 install apk_pool/ApiDemos-debug.apk
+          adb -s emulator-5562 install apk_pool/ApiDemos-debug.apk
+
+      - name: check python version
+        run: |
+          python3 -V
+          python3 -m pip install pip --upgrade
+          python3 -m pip install pipenv
+          pipenv --version
+
+      - name: python appium test
+        run: |
+          echo 'start python appium test'
+          cd github-android-emulator-tryout
+            pipenv sync
+            pipenv run python3 appium-helloworld.py
+          cd -
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v1
+        with:
+          name: appium.log
+          path: appium.log
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v1
+        with:
+          name: screenshots_${{ matrix.ansdroid_api_ver }}
+          path: github-android-emulator-tryout/screens

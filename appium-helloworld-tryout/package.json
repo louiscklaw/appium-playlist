@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "appium": "^1.18.3",
+    "appium": "^1.19.1",
+    "appium-doctor": "^1.15.4",
     "global": "^4.4.0"
   }
 }
