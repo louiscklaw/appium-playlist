@@ -4,14 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier_file": "prettier --write \"./*.{js,jsx}\"",
+    "gitUpdate": "yarn prettier_file && git add . && git commit -m\"update appium-helloworld-tryout, \""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "appium": "^1.19.1",
-    "appium-doctor": "^1.15.4",
+    "appium": "latest",
+    "appium-doctor": "latest",
     "global": "^4.4.0"
+  },
+  "devDependencies": {
+    "prettier": "latest"
   }
 }
