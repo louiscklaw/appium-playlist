@@ -29,6 +29,7 @@ services:
   # Docker-Android for Android application testing
   nexus_12:
     image: budtmo/docker-android-x86-12.0
+    restart: unless-stopped
     privileged: true
     # Increase scale number if needed
     scale: 3
