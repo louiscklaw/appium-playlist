@@ -31,7 +31,7 @@ services:
     image: budtmo/docker-android-x86-12.0
     privileged: true
     # Increase scale number if needed
-    scale: 1
+    scale: 3
     depends_on:
       - selenium_hub
       # - real_device
