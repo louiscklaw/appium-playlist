@@ -14,9 +14,7 @@
   "dependencies": {
     "appium": "latest",
     "appium-doctor": "latest",
-    "global": "^4.4.0"
-  },
-  "devDependencies": {
+    "global": "^4.4.0",
     "prettier": "latest"
   }
 }
