@@ -15,3 +15,4 @@ driver = webdriver.Remote('http://192.168.10.21:4444/wd/hub', desired_caps)
 driver.save_screenshot('screens/helloworld.png')
 
 print('done')
+driver.quit()

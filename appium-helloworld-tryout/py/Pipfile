@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 appium-python-client = "*"
 pytest = "*"
+stringcase = "*"
 
 [dev-packages]
 
