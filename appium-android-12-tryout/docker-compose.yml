@@ -43,7 +43,8 @@ services:
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
       - ./video-nexus_12:/tmp/video
-      - ./apk_pool:/root/apk_pool
+      # - ./apk_pool:/root/apk_pool
+      - ../volume/apks:/root/apk_pool
     environment:
       - DEVICE=Nexus 5
       - CONNECT_TO_GRID=true
