@@ -33,13 +33,13 @@ services:
     restart: unless-stopped
     privileged: true
     # Increase scale number if needed
-    scale: 2
+    scale: 3
     depends_on:
       - selenium_hub
       # - real_device
     ports:
-      - "4723-4724:4723"
-      - "6080-6081:6080"
+      - "4723-4725:4723"
+      - "6080-6082:6080"
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
       - ./video-nexus_12:/tmp/video
