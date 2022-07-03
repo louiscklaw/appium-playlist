@@ -46,6 +46,7 @@ services:
       # - ./apk_pool:/root/apk_pool
       - ../volume/apks:/root/apk_pool
     environment:
+      - RELAXED_SECURITY=True
       - DEVICE=Nexus 5
       - CONNECT_TO_GRID=true
       - APPIUM=true
