@@ -74,10 +74,10 @@ class TestAndroidBasicInteractions():
         # driver.set_location(22.3172915+random.random()/100000000,114.2312236+random.random()/100000000, 0)
 
         # 22.3279917,114.1855221
-        target_lang = 22.3279917+(random.random()/100)
-        target_log = 114.1855221+(random.random()/100)
-        print([target_lang,target_log])
-        driver.set_location(target_lang,target_log, 0)
+        # 22.3161392,114.1853441
+        center_pos = [22.3161392,114.1853441]
+        target_pos = [center_pos[0]+(random.random()/10000), center_pos[1]+(random.random()/10000)]
+        driver.set_location(target_pos[0], target_pos[1], 0)
 
         sleep(3)
         GpsOn(driver)
