@@ -9,9 +9,9 @@ set -ex
 
 # pipenv run python3 ./main.py
 
-mkdir -p /tmp/apk_temp
+mkdir -p /tmp/apk_pool
 
-cp ./apk_pool/*.apk /tmp/apk_temp/
+cp ./apk_pool/*.apk /tmp/apk_pool/
 
 #pipenv run python3 ./test_ifconfig_me.py
 pipenv run python3 ./test_curl.py
