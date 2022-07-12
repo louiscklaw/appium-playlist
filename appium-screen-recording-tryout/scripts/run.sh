@@ -7,4 +7,5 @@ set -ex
 
 # node ./index.js
 
-pipenv run python3 ./main.py
+# pipenv run python3 ./main.py
+pipenv run python3 ./test_ifconfig_me.py
