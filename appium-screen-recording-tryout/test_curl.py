@@ -18,7 +18,7 @@ desired_caps['deviceName'] = 'Android'
 driver = webdriver.Remote('http://192.168.10.21:4444/wd/hub', desired_caps)
 driver.implicitly_wait(5)
 
-driver.installApp("/root/apk_pool/app.apk")
+driver.install_app("/root/apk_pool/app.apk")
 time.sleep(10)
 
 print('done')

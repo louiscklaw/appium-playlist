@@ -13,4 +13,5 @@ mkdir -p /tmp/apk_temp
 
 cp ./apk_pool/*.apk /tmp/apk_temp/
 
-pipenv run python3 ./test_ifconfig_me.py
+#pipenv run python3 ./test_ifconfig_me.py
+pipenv run python3 ./test_curl.py
