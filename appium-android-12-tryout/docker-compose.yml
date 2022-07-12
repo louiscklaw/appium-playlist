@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
     privileged: true
     # Increase scale number if needed
-    scale: 2
+    scale: 1
     depends_on:
       - selenium_hub
       # - real_device
