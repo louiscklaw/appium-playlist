@@ -38,13 +38,17 @@ services:
       - selenium_hub
       # - real_device
     ports:
-      - "4723-4725:4723"
-      - "6080-6082:6080"
+      - "4723:4723"
+      - "6080:6080"
+      - "5555:5555"
+      - "5554:5554"
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
       - ./video-nexus_12:/tmp/video
       # - ./apk_pool:/root/apk_pool
-      - ../volume/apks:/root/apk_pool
+      # - ../volume/apks:/root/apk_pool
+      - /tmp/apk_pool:/root/apk_pool
+
     environment:
       - RELAXED_SECURITY=True
       - DEVICE=Nexus 5
