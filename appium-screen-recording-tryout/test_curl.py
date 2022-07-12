@@ -21,6 +21,16 @@ driver.implicitly_wait(5)
 driver.install_app("/root/apk_pool/curl.apk")
 time.sleep(10)
 
+result = driver.execute_script('mobile: shell', {
+    'command': 'curl',
+    'args': ['http://www.example.com'],
+    'includeStderr': True,
+    'timeout': 5000
+})
+# assert result['stdout'] == 'arg1 arg2'
+print(result['stdout'])
+
+
 print('done')
 
 # time.sleep(10)
