@@ -7,6 +7,4 @@ set -ex
 
 # node ./index.js
 
-
-
 pipenv run python3 ./main.py

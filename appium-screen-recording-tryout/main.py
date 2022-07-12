@@ -42,7 +42,7 @@ caps = {
 # browser = webdriver.Chrome(CHROME_DRIVER_DIR+'/chrome/86/chromedriver', desired_capabilities=caps)
 
 # This will launch your Android application.
-driver = webdriver.Remote('http://localhost:4723/wd/hub', caps)
+driver = webdriver.Remote('http://192.168.10.21:4444/wd/hub', caps)
 
 
 VIDEO_PATH='/home/logic/_workspace/appium-playlist/appium-screen-recording-tryout/recording'
