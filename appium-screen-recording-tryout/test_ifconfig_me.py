@@ -1,67 +1,44 @@
-import os,sys
-from pprint import pprint
+import time
 from time import sleep
-import base64
-from os.path import dirname
-
 from appium import webdriver
-# from selenium import webdriver
 
-CURR_DIR=os.path.abspath(os.path.dirname(__file__))
-REPO_HOME=os.path.abspath(CURR_DIR+'/..')
-CHROME_DRIVER_DIR=os.path.abspath(REPO_HOME+'/drivers')
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-VIDEO_PATH=f'{CURR_DIR}/recording'
+# it's hybrid app
+# idea is to switch to desired context and continue stuff there
+# could be, when app redirects to url from browser (terms of agreement), etc.
+# on chrome tab as separated activity unable to reproduce
 
-# caps = webdriver.DesiredCapabilities.CHROME.copy()
-# chrome_options = webdriver.ChromeOptions()
-# mobile_emulation = {
-#   "deviceName": "Nexus 5"
-#   }
-# chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
-# chrome_options.add_argument("--headless")
-# caps=chrome_options.to_capabilities()
-# caps['acceptInsecureCerts'] = True
-# browser = webdriver.Chrome(CHROME_DRIVER_DIR+'/chrome/86/chromedriver', desired_capabilities=caps)
+desired_caps = {}
+desired_caps['platformName'] = 'Android'
+desired_caps['deviceName'] = 'Android'
+desired_caps['appPackage'] = 'com.android.chrome'
+desired_caps['appActivity'] = 'org.chromium.chrome.browser.ChromeTabbedActivity'
 
-caps = {
-    "platformName": "Android",
-    "appPackage": "com.android.chrome",
-    "appActivity": "com.google.android.apps.chrome.Main",
-    "automationName": "UiAutomator2",
-    "clearSystemFiles":True,
-    "disableWindowAnimation":True,
-    "newCommandTimeout": 120,
-    "fastReset": True,
-    "printPageSourceOnFindFailure":True,
-    "clearSystemFiles":True,
-    "acceptInsecureCerts": True,
-    'uiautomator2ServerLaunchTimeout': 60 * 1000
-}
+driver = webdriver.Remote('http://192.168.10.21:4444/wd/hub', desired_caps)
+driver.implicitly_wait(10)
 
-# This will launch your Android application.
-driver = webdriver.Remote('http://192.168.10.21:4444/wd/hub', caps)
+driver.find_element_by_id("com.android.chrome:id/terms_accept").click()
+driver.find_element_by_id("com.android.chrome:id/negative_button").click()
 
-def saveRecordingScreen(driver, video_name):
-  video_rawdata = driver.stop_recording_screen()
+driver.get('http://ifconfig.me')
+time.sleep(2)
+contexts = driver.contexts
 
-  filepath = os.path.join("{}/{}".format(VIDEO_PATH, video_name))
-  with open(filepath, "wb") as vd:
-      vd.write(base64.b64decode(video_rawdata))
+for context in contexts:
+    print(context)
 
+driver.switch_to.context("WEBVIEW_chrome")
+driver.implicitly_wait(10)
 
-try:
-  driver.implicitly_wait(5)
-  driver.start_recording_screen()
+# temp = driver.find_element_by_xpath('//body').text
+# temp = driver.find_element_by_xpath('//*[@id="container"]').text
+WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="container"]')))
 
-  driver.switch_to.context("NATIVE_APP")
+print("see ?")
+print(temp)
 
-  driver.find_element_by_id("com.android.chrome:id/terms_accept").click()
-  driver.find_element_by_id("com.android.chrome:id/negative_button").click()
-  driver.get('http://ifconfig.me')
-  
-  temp = driver.find_element_by_id("com.android.chrome:id/ip_address_cell")
-  print(temp)
-finally:
-  saveRecordingScreen(driver, './helloworld.mp4')
-  driver.quit()
+# time.sleep(10)
+driver.quit()
