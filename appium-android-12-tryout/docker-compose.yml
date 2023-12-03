@@ -1,7 +1,7 @@
-# Note: It requires docker-compose 1.13.0
+# Note: It requires docker compose 1.13.0
 #
-# Usage: docker-compose up -d
-version: "2.2"
+# Usage: docker compose up -d
+version: '2.2'
 
 services:
   # Selenium hub
@@ -38,14 +38,14 @@ services:
       - selenium_hub
       # - real_device
     ports:
-      - "4723:4723"
-      - "6080:6080"
-      - "5555:5555"
-      - "5554:5554"
+      - '4723:4723'
+      - '6080:6080'
+      - '5555:5555'
+      - '5554:5554'
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
       - ./video-nexus_12:/tmp/video
-      # - ./apk_pool:/root/apk_pool
+      - ./apk_pool:/root/apk_pool
       # - ../volume/apks:/root/apk_pool
       - /tmp/apk_pool:/root/apk_pool
 

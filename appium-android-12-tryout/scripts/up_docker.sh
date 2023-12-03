@@ -2,8 +2,8 @@
 
 set -ex
 
-docker-compose pull
+docker compose pull
 
-docker-compose build
+docker compose build
 
-docker-compose up
+docker compose up
