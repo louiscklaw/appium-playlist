@@ -2,8 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const wdio = require("webdriverio");
 
-const TEST_DIR=__dirname
-const SCREENCAPTURE_DIR=path.resolve(`${TEST_DIR}/screen`)
+const TEST_DIR = __dirname
+const SCREENCAPTURE_DIR = path.resolve(`${TEST_DIR}/screen`)
 
 const opts = {
   path: '/wd/hub',
@@ -20,11 +20,11 @@ const opts = {
   }
 };
 
-async function main () {
+async function main() {
   const client = await wdio.remote(opts);
 
   let screenshot = await client.takeScreenshot();
-  fs.writeFileSync(`${SCREENCAPTURE_DIR}/capture_using_javascript.png`,screenshot,{encoding:'base64'})
+  fs.writeFileSync(`${SCREENCAPTURE_DIR}/capture_using_javascript.png`, screenshot, { encoding: 'base64' })
 
   await client.deleteSession();
 }
