@@ -7,11 +7,12 @@ const SCREENCAPTURE_DIR = path.resolve(`${TEST_DIR}/screen`)
 
 const opts = {
   path: '/wd/hub',
-  port: 4723,
+  port: 4444,
   capabilities: {
     platformName: "Android",
     platformVersion: "12.0",
-    app: "/root/apk_pool/ApiDemos-debug.apk",
+    // app: "/root/apk_pool/ApiDemos-debug.apk",
+    app: "/root/apk_pool/wati_sut.apk",
     // fullReset: true
     // deviceName: "nexus_5_7.1.1",
     // appPackage: "io.appium.android.apis",

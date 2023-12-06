@@ -11,12 +11,11 @@ const opts = {
   capabilities: {
     platformName: "Android",
     platformVersion: "12.0",
-    app: "/root/apk_pool/ApiDemos-debug.apk",
-    // fullReset: true
+    // fullReset: true,
+    // automationName: "UiAutomator2",
     // deviceName: "nexus_5_7.1.1",
     // appPackage: "io.appium.android.apis",
     // appActivity: ".view.TextFields",
-    // automationName: "UiAutomator2"
   }
 };
 
@@ -24,7 +23,11 @@ async function main() {
   const client = await wdio.remote(opts);
 
   let screenshot = await client.takeScreenshot();
-  fs.writeFileSync(`${SCREENCAPTURE_DIR}/capture_using_javascript.png`, screenshot, { encoding: 'base64' })
+  fs.writeFileSync(
+    `${SCREENCAPTURE_DIR}/capture_using_javascript.png`,
+    screenshot, { encoding: 'base64' }
+  );
+
 
   await client.deleteSession();
 }

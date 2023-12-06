@@ -6,19 +6,22 @@ const TEST_DIR = __dirname
 const SCREENCAPTURE_DIR = path.resolve(`${TEST_DIR}/screen`)
 
 const opts = {
-  path: '/wd/hub',
+  path: '/',
   port: 4723,
   capabilities: {
     platformName: "Android",
-    platformVersion: "12.0",
-    app: "/root/apk_pool/ApiDemos-debug.apk",
-    // fullReset: true
-    // deviceName: "nexus_5_7.1.1",
-    // appPackage: "io.appium.android.apis",
-    // appActivity: ".view.TextFields",
-    // automationName: "UiAutomator2"
+    "appium:automationName": "UiAutomator2",
+    "appium:app": "/workspace/appium-playlist/appium-android-12-tryout/apk_pool/wati_sut.apk"
   }
 };
+
+// app: "/root/apk_pool/ApiDemos-debug.apk",
+// platformVersion: "12.0",
+// fullReset: true
+// deviceName: "nexus_5_7.1.1",
+// appPackage: "io.appium.android.apis",
+// appActivity: ".view.TextFields",
+// automationName: "UiAutomator2"
 
 async function main() {
   const client = await wdio.remote(opts);

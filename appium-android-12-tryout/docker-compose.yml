@@ -11,22 +11,6 @@ services:
     ports:
       - 4444:4444
 
-  # # Using Appium Docker Android
-  # real_device:
-  #   image: appium/appium
-  #   depends_on:
-  #     - selenium_hub
-  #   # network_mode: "service:selenium_hub"
-  #   privileged: true
-  #   volumes:
-  #     - /dev/bus/usb:/dev/bus/usb
-  #     - ~/.android:/root/.android
-  #   environment:
-  #     - CONNECT_TO_GRID=true
-  #     - SELENIUM_HOST=selenium_hub
-  #     # Enable it for msite testing
-  #     #- BROWSER_NAME=chrome
-
   # Docker-Android for Android application testing
   nexus_12:
     image: logickee/docker-android-x86-12.0
@@ -50,11 +34,11 @@ services:
       - /tmp/apk_pool:/root/apk_pool
 
     environment:
+      - APPIUM=true
       - RELAXED_SECURITY=True
       - DEVICE=Nexus 5
-      - CONNECT_TO_GRID=true
-      - APPIUM=true
       - SELENIUM_HOST=selenium_hub
+      - CONNECT_TO_GRID=true
       - AUTO_RECORD=true
 
   # Docker-Android for mobile website testing with chrome browser
@@ -101,3 +85,19 @@ services:
   #    - SELENIUM_HOST=selenium_hub
   #    - MOBILE_WEB_TEST=true
   #   - AUTO_RECORD=true
+
+  # # Using Appium Docker Android
+  # real_device:
+  #   image: appium/appium
+  #   depends_on:
+  #     - selenium_hub
+  #   # network_mode: "service:selenium_hub"
+  #   privileged: true
+  #   volumes:
+  #     - /dev/bus/usb:/dev/bus/usb
+  #     - ~/.android:/root/.android
+  #   environment:
+  #     - CONNECT_TO_GRID=true
+  #     - SELENIUM_HOST=selenium_hub
+  #     # Enable it for msite testing
+  #     #- BROWSER_NAME=chrome
