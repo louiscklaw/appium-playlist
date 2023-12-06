@@ -1,6 +1,7 @@
 .env
 **/*.mp4
 **/*.png
+**/*.apk
 
 **/node_modules
 **/build
