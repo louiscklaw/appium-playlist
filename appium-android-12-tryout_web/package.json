@@ -1,0 +1,16 @@
+{
+  "name": "appium-android-12-tryout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test_node": "cd tests/javascript && yarn && node ./helloworld.js",
+    "test_python": "cd tests/python && pipenv sync && pipenv run python3 ./helloworld.py",
+    "docker_rebuild": "docker compose kill && docker compose rm -v -f && docker compose up -d && docker compose logs -f ",
+    "gitSync": "git fetch --all && git pull",
+    "gitUpdate": "git add . && git commit -m\"update appium-android-12-tryout_web,\" && yarn gitSync && git push"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
